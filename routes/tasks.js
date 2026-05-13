@@ -49,7 +49,7 @@ router.get("/:project_id/tasks", (req, res) => {
 });
 
 // PUT /tasks/:id - Update task
-router.put("/:id/tasks/update", (req, res) => {
+router.put("/tasks/:id", (req, res) => {
   const { title, description, status, priority, due_date } = req.body;
 
   db.query(
@@ -65,7 +65,7 @@ router.put("/:id/tasks/update", (req, res) => {
 });
 
 // DELETE /tasks/:id - Delete task
-router.delete("/:id/tasks/delete", (req, res) => {
+router.delete("/tasks/:id", (req, res) => {
   db.query("DELETE FROM tasks WHERE id = ?", [req.params.id], (err, result) => {
     if (err) return res.status(500).json({ error: err.message });
     if (result.affectedRows === 0)
