@@ -181,7 +181,13 @@ PUT /1/tasks/update
 
 ## Screenshots
 
-See screenshots folder for UI screenshots.
+### Projects Page
+
+![Projects](screenshots/projects-page.png)
+
+### Tasks Page
+
+![Tasks](screenshots/tasks-page.png)
 
 ## Author
 
