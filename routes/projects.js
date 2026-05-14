@@ -49,16 +49,22 @@ router.get("/:id", (req, res) => {
 
 // DELETE /projects/:id - Delete project
 router.delete("/:id", (req, res) => {
-  db.query(
-    "DELETE FROM projects WHERE id = ?",
-    [req.params.id],
-    (err, result) => {
-      if (err) return res.status(500).json({ error: err.message });
-      if (result.affectedRows === 0)
-        return res.status(404).json({ error: "Project not found" });
-      res.json({ message: "Project deleted successfully" });
-    },
-  );
+  // First delete all tasks for this project
+  db.query("DELETE FROM tasks WHERE project_id = ?", [req.params.id], (err) => {
+    if (err) return res.status(500).json({ error: err.message });
+
+    // Then delete the project
+    db.query(
+      "DELETE FROM projects WHERE id = ?",
+      [req.params.id],
+      (err, result) => {
+        if (err) return res.status(500).json({ error: err.message });
+        if (result.affectedRows === 0)
+          return res.status(404).json({ error: "Project not found" });
+        res.json({ message: "Project deleted successfully" });
+      },
+    );
+  });
 });
 
 module.exports = router;
